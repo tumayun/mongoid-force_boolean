@@ -1,11 +1,9 @@
 # mongoid-force_boolean
---------------
 
 Mongoid document boolean type field can only be true or false.
 
-
 ## Installation
---------------
+
 - git clone git@github.com:tumayun/mongoid-force_boolean.git
 - cd mongoid-force_boolean
 - gem build  mongoid-force_boolean.gemspec
@@ -16,7 +14,6 @@ Mongoid document boolean type field can only be true or false.
 
 
 ## Usage
--------------
 
 ```ruby
 class Post
@@ -49,7 +46,6 @@ post.save # raise TypeError
 ```
 
 ## Contributing
--------------
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
