@@ -22,6 +22,8 @@ module Mongoid
           end
         end
       end
+
+      self.errors.empty?
     end
 
     def has_boolean_field?
