@@ -1,6 +1,6 @@
 # mongoid-force_boolean
 
-Mongoid document boolean type field can only be true or false.
+Mongoid document boolean type field must be boolean.
 
 ## Installation
 
@@ -10,7 +10,7 @@ Mongoid document boolean type field can only be true or false.
 - gem install mongoid-force_boolean-x.x.x.gem
 - Add this line to your application's Gemfile:
 
-        gem 'mongoid-force_boolean'
+        gem 'mongoid-force_boolean', require: 'force_boolean'
 
 
 ## Usage
@@ -26,23 +26,24 @@ class Post
 end
 
 post = Post.new(title: 'title', body: 'body', publushed: 0)
-post.save
+post.save      #=> true
 post.published #=> false
 
 post.published = 1
-post.save
+post.save      #=> true
 post.published #=> true
 
 post.published = false
-post.save
+post.save      #=> true
 post.published #=> false
 
 post.published = true
-post.save
+post.save      #=> true
 post.published #=> true
 
 post.published = 100
-post.save # raise TypeError
+post.save      #=> false
+post.errors[:published] #=> ['must be boolean']
 ```
 
 ## Contributing
