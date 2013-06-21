@@ -4,12 +4,12 @@ module Mongoid
     class NotMongoidDocumentError < StandardError; end
 
     included do
-      raise NotMongoidDocumentError, "The #{self.name} class  is not Mongoid::Document." unless ancestors.include?(Mongoid::Document)
+      raise NotMongoidDocumentError, "The #{self.name} class is not Mongoid::Document." unless ancestors.include?(Mongoid::Document)
 
-      before_save :force_boolean!, if: :has_boolean_field?
+      validate :force_boolean, if: :has_boolean_field?
     end
 
-    def force_boolean!
+    def force_boolean
       self.class.boolean_fields.map do |field|
         if (field_value = self.read_attribute(field)) && field_value != true && field_value != false
 
@@ -17,8 +17,8 @@ module Mongoid
             self.write_attribute(field, false)
           elsif field_value.to_s == '1'
             self.write_attribute(field, true)
-          else
-            raise TypeError, "The #{field} field is not boolean type."
+          elsif !field_value.nil?
+            self.errors.add(field, 'must be boolean')
           end
         end
       end

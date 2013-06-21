@@ -1,5 +1,5 @@
 $: << File.expand_path('../lib', __FILE__)
-require 'mongoid/version'
+require 'force_boolean/version'
 
 Gem::Specification.new do |gem|
   gem.name          = 'mongoid-force_boolean'
@@ -7,8 +7,8 @@ Gem::Specification.new do |gem|
   gem.authors       = 'Tumayun'
   gem.email         = 'tumayun.2010@gmail.com'
   gem.homepage      = 'https://github.com/tumayun/mongoid-force_boolean'
-  gem.summary       = 'Mongoid document boolean type field can only be true or false.'
-  gem.description   = 'Mongoid document boolean type field can only be true or false.'
+  gem.summary       = 'Mongoid document boolean type field must be boolean.'
+  gem.description   = 'Mongoid document boolean type field must be boolean.'
 
   gem.files         = `git ls-files`.split("\n")
   gem.require_path  = 'lib'

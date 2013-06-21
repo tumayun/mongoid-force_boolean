@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), '..', 'spec_helper')
+require File.join(File.dirname(__FILE__), 'spec_helper')
 
 describe Mongoid::ForceBoolean do
 
@@ -31,40 +31,48 @@ end
       TestA.boolean_fields.sort.should == ["published"]
     end
 
-    context 'TestA#force_boolean!' do
+    context 'TestA#force_boolean' do
 
       it 'boolean field value is "0" should will become false' do
         a = TestA.new(published: "0")
         a.published.should == "0"
-        a.force_boolean!
+        a.force_boolean
         a.published.should == false
       end
 
       it 'boolean field value is "1" should will become true' do
         a = TestA.new(published: "1")
         a.published.should == "1"
-        a.force_boolean!
+        a.force_boolean
         a.published.should == true
       end
 
       it 'boolean field value is false' do
         a = TestA.new(published: false)
         a.published.should == false
-        a.force_boolean!
+        a.force_boolean
         a.published.should == false
       end
 
       it 'boolean field value is true' do
         a = TestA.new(published: true)
         a.published.should == true
-        a.force_boolean!
+        a.force_boolean
         a.published.should == true
+      end
+
+      it 'boolean field value is nil' do
+        a = TestA.new
+        a.published.should be_nil
+        a.force_boolean
+        a.published.should be_nil
       end
 
       it 'boolean field value is other values' do
         a = TestA.new(published: 100)
         a.published.should == 100
-        -> { a.force_boolean! }.should raise_error(TypeError, 'The published field is not boolean type.')
+        a.force_boolean
+        a.errors[:published].should == ["must be boolean"]
       end
     end
 
@@ -80,7 +88,7 @@ end
   context 'no included Mongoid::Document' do
     it 'should raise Mongoid::ForceBoolean::NotMongoidDocumentError' do
       -> { TestC.send(:include, Mongoid::ForceBoolean) }.
-        should raise_error(Mongoid::ForceBoolean::NotMongoidDocumentError, "The TestC class  is not Mongoid::Document.")
+        should raise_error(Mongoid::ForceBoolean::NotMongoidDocumentError, "The TestC class is not Mongoid::Document.")
     end
   end
 end
